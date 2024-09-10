@@ -14,7 +14,7 @@
         {% for space in spaces %}
 
             <h3>{{ space.name }}</h3>
-            <h5>{{ "%0.2f" | space.price | float }}</h5>
+            <h5>{{ space.price }}</h5>
             <p>{{ space.description }}</p>
 
         {% endfor %}
