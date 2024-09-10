@@ -1,9 +1,10 @@
-from datetime import date
+from datetime import datetime
 
 
 class Booking():
     def __init__(self, id, date_booked, booking_status, user_id, space_id) -> None:        
         self.id = id
+        # self.date_booked = datetime.strptime(date_booked, '%Y-%m-%d').date()
         self.date_booked = date_booked
         self.booking_status = self.is_valid(booking_status)        
         self.user_id = user_id
@@ -12,7 +13,7 @@ class Booking():
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
     
-    def __repr__(self) -> str:
+    def __repr__(self):
         return f"Booking({self.id}, {self.date_booked}, {self.booking_status}, {self.user_id}, {self.space_id})"
     
     def is_valid(self, booking_status):
