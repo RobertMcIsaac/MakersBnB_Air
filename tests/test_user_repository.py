@@ -32,7 +32,7 @@ def test_create_password_special_character_fail(db_connection):
     with pytest.raises(Exception) as err:
         repository.create_user(User(None, "Jack", "jackemail@email.com", "password1"))
     error_msg = str(err.value)
-    assert error_msg == "This passsword does not comply with requirements! Must have atleast one special character"
+    assert error_msg == "This password does not comply with requirements! Must have at least one special character"
 
 """
 test password does not length of character requirement, raises an error
@@ -43,7 +43,7 @@ def test_create_password_character__length_fail(db_connection):
     with pytest.raises(Exception) as err:
         repository.create_user(User(None, "Jack", "jackemail@email.com", "passw"))
     error_msg = str(err.value)
-    assert error_msg == "This passsword does not comply with requirements! Must have atleast 8 characters"
+    assert error_msg == "This password does not comply with requirements! Must have at least 8 characters"
 
     # try:
     #     repository.create_user(User(None, "Alex", "dunno@gmail.com", "badpassword"))
@@ -58,6 +58,38 @@ def test_read_user_details(db_connection):
     assert user == User(3, "Alex", "alex@example.com", "password£7£89")
 
 
-""" 
+"""test that password can be updated correctly"""
+def test_update_password_success(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    user = repository.update_password("Alex", "qwertyuiop!")
+    updated_profile = repository.get_user_details("Alex")
+    assert updated_profile == User(3, "Alex", "alex@example.com", "qwertyuiop!")
 
-"""
+"""test that password can be updated incorrectly (special characters)"""
+def test_update_password_fail_special(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    with pytest.raises(Exception) as err:
+        user = repository.update_password("Alex", "qwertyuiop")
+    error_msg = str(err.value)
+    assert error_msg == "This password does not comply with requirements! Must have at least one special character"
+    
+
+"""test that password can be updated incorrectly (character count)"""
+def test_update_password_fail_number(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    with pytest.raises(Exception) as err:
+        user = repository.update_password("Alex", "we")
+    error_msg = str(err.value)
+    assert error_msg == "This password does not comply with requirements! Must have at least 8 characters"
+
+"""test that password can be updated incorrectly (username)"""
+def test_update_password_fail_user(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    with pytest.raises(Exception) as err:
+        user = repository.update_password("Bob Dylan", "we")
+    error_msg = str(err.value)
+    assert error_msg == "User not found."
