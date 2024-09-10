@@ -1,3 +1,6 @@
+from datetime import date
+
+
 class Booking():
     def __init__(self, id, date_booked, booking_status, user_id, space_id) -> None:        
         self.id = id
@@ -9,7 +12,7 @@ class Booking():
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
     
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f"Booking({self.id}, {self.date_booked}, {self.booking_status}, {self.user_id}, {self.space_id})"
     
     def is_valid(self, booking_status):
@@ -17,4 +20,7 @@ class Booking():
             return booking_status
         else: 
             raise Exception("Incorrect value: please enter either 'pending' or 'confirmed'")
-
+        
+    def convert_date(self):
+        # to be continued
+        pass
