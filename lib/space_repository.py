@@ -1,0 +1,23 @@
+from lib.space import Space
+
+class SpaceRepository():
+
+    def __init__(self, connection):
+        self._connection = connection
+
+    def all(self):
+        rows = self._connection.execute("SELECT * FROM spaces")
+        spaces = []
+        for row in rows:
+            space = Space(row["name"], row["description"], row["price"], row["user_id"])
+            spaces.append(space)
+        return spaces
+    
+    def create(self, space: Space):
+        self._connection.execute("INSERT INTO spaces (name, description, price, user_id) VALUES (%s, %s, %s, %s)", [space.name, space.description, space.price, space.user_id])
+        return None
+    
+    # find with owner
+    def find_with_user_id(self, id):
+        rows = self._connection.execute("SELECT * FROM spaces WHERE user_id = %s", [id])
+        return [Space(row["name"], row["description"], row["price"], row["user_id"]) for row in rows]

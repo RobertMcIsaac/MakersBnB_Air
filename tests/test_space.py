@@ -6,7 +6,7 @@ from lib.space import Space
         name
         description
         price
-        user_ID
+        user_id
 """
 def test_space_initialises_correctly():
 
@@ -15,7 +15,7 @@ def test_space_initialises_correctly():
     assert space.name == "The Scottish Conversatory"
     assert space.description == "The extremely hot and extremely cold"
     assert space.price == 20.50
-    assert space.user_ID == 1
+    assert space.user_id == 1
 
 
 """
