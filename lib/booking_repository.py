@@ -12,13 +12,14 @@ class BookingRepository():
         return all_bookings
     
     def create(self, booking):
-        self._connection.execute(
+        rows = self._connection.execute(
             'INSERT INTO bookings \
                 (date_booked, booking_status, user_id, space_id) \
                     VALUES (%s, %s, %s, %s)', 
                     [booking.date_booked, booking.booking_status, booking.user_id, booking.space_id]
                     )
-        return None
+        row = rows[0]
+        return row['id']
 
     def confirm_booking(self, id):
         self._connection.execute(
