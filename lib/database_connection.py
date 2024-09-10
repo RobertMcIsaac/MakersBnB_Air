@@ -11,7 +11,7 @@ from psycopg.rows import dict_row
 class DatabaseConnection:
     # VVV CHANGE BOTH OF THESE VVV
     DEV_DATABASE_NAME = "MAKERSBNB_AIR"
-    TEST_DATABASE_NAME = "MAKERSBNB_PROJECT_TEST"
+    TEST_DATABASE_NAME = "MAKERSBNB_AIR_TEST"
 
     def __init__(self, test_mode=False):
         self.test_mode = test_mode

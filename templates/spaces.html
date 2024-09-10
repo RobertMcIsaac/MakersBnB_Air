@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MakersBnB - Air</title>
+
+        <!--
+            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
+            If you're wondering how the CSS file below is being loaded.
+        -->
+        <link rel="stylesheet" href="/static/style.css" >
+    </head>
+    <body>
+
+        {% for space in spaces %}
+
+            <h3>{{ space.name }}</h3>
+            <h5>{{ "%0.2f" | space.price | float }}</h5>
+            <p>{{ space.description }}</p>
+
+        {% endfor %}
+
+    </body>
+</html>
