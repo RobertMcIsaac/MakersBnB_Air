@@ -1,4 +1,3 @@
-import pytest
 from lib.user import *
 
 """
