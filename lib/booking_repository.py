@@ -15,12 +15,15 @@ class BookingRepository():
         rows = self._connection.execute(
             'INSERT INTO bookings \
                 (date_booked, booking_status, user_id, space_id) \
-                    VALUES (%s, %s, %s, %s)', 
+                    VALUES (%s, %s, %s, %s) RETURNING id', 
                     [booking.date_booked, booking.booking_status, booking.user_id, booking.space_id]
                     )
         row = rows[0]
-        return row['id']
-
+        # captures the booking id returned in SQL executed above with 'RETURNING id' and assigns it to the id attribute of booking (booking.id)
+        booking.id = row['id']
+        return booking
+    
+    # We should probably just initialise booking_status as 'pending' by default directly in Booking init method
     def confirm_booking(self, id):
         self._connection.execute(
             'UPDATE bookings SET booking_status = %s WHERE id = %s',

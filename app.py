@@ -26,13 +26,13 @@ def post_booking(user_id, space_id):
     repo = BookingRepository(connection)
     booking = Booking(
         None,
-        'pending',
         request.form['date_booked'],
+        'pending',
         user_id,
         space_id
         )
-    id = repo.create(booking)
-    return redirect(f"/booking/{id}")
+    booking = repo.create(booking)
+    return redirect(f"/booking/{booking.id}")
 
 
 # These lines start the server if you run this file directly
