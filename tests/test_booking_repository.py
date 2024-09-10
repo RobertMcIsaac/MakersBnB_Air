@@ -1,5 +1,6 @@
 from lib.booking_repository import BookingRepository 
 from lib.booking import Booking
+from datetime import date
 
 def test_read_bookings(db_connection):
     db_connection.seed('seeds/air_makersbnb_test.sql')
@@ -10,7 +11,7 @@ def test_read_bookings(db_connection):
         print(f'Booking({booking.id}, {booking.date_booked}, {booking.booking_status}, {booking.user_id}, {booking.space_id}),')
 
     
-    assert all_bookings == [Booking(1, '2024-09-25', 'confirmed', 1, 3), Booking(2, '2024-11-23', 'confirmed', 1, 5), Booking(3, '2025-09-20', 'pending', 2, 1), Booking(4, '2024-10-15', 'pending', 2, 4), Booking(5, '2024-12-30', 'pending', 1, 2)]
+    assert all_bookings == [Booking(1, date(2024,9,25), 'confirmed', 1, 3), Booking(2, date(2024,11,23), 'confirmed', 1, 5), Booking(3, date(2025,9,20), 'pending', 2, 1), Booking(4, date(2024,10,15), 'pending', 2, 4), Booking(5, date(2024,12,30), 'pending', 1, 2)]
 # def test_get_all_records(db_connection): # See conftest.py to learn what `db_connection` is.
 #     db_connection.seed("seeds/music_library.sql") # Seed our database with some test data
 #     repository = AlbumRepository(db_connection) # Create a new AlbumRepository 
