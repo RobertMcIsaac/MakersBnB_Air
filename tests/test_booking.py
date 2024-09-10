@@ -1,5 +1,6 @@
 from lib.booking import Booking
 import pytest
+from datetime import date
 
 """
 Test booking inits correctly with id, date_booked, booking_status, user_id, space_id
@@ -42,4 +43,6 @@ def test_date_booked_is_either_pending_or_confirmed():
 """
 date_booked is a datetime object
 """
+
+# import datetime convert string to date time and then assert date time object when converted back into a string == string of date
 
