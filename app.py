@@ -21,47 +21,8 @@ def get_index():
     return render_template('index.html')
 
 
+#------------------- SPACES ROUTES -------------------#
 
-# BOOKING ROUTES
-
-@app.route('/booking/<int:user_id>/<int:space_id>', methods=["GET"])
-def get_booking_form(user_id, space_id):
-    return render_template('booking_form.html', user_id = user_id, space_id = space_id)
-
-@app.route('/post_booking/<int:user_id>/<int:space_id>', methods=["POST"])
-def post_booking(user_id, space_id):
-    connection = get_flask_database_connection(app)
-    repo = BookingRepository(connection)
-    date = request.form['date_booked']
-    booking = Booking(
-        None,
-        date,
-        'pending',
-        user_id,
-        space_id
-        )
-    booking = repo.create(booking)
-    return redirect(f'/booking_complete/{booking.id}')
-    # return render_template("booking.html", booking = booking)
-    # return '', 200
-    
-    
-
-@app.route('/booking_complete/<int:id>', methods=['GET'])
-def get_booking(id):
-    connection = get_flask_database_connection(app)
-    repo = BookingRepository(connection)
-    booking = repo.get_booking(id)
-    return render_template('booking.html', booking = booking)
-
-@app.route('/booking_confirmed/<int:booking_id>', methods=["PUT"])
-def put_booking(booking_id):
-    connection = get_flask_database_connection(app)
-    repo = BookingRepository(connection)
-    booking = repo.confirm_booking(booking_id)
-    return '' , 200
-
-# SPACES MAIN PAGE
 @app.route('/spaces')
 def get_spaces():
 
@@ -71,9 +32,13 @@ def get_spaces():
 
     return render_template('spaces.html', spaces=list_of_spaces)
 
+#------------------- REGISTER ROUTES -------------------#
+
 @app.route('/register')
 def get_register_page():
     return render_template('/register.html')
+
+
 
 @app.route('/register', methods=["POST"])
 def register_user():
@@ -101,15 +66,46 @@ def register_successful():
     return render_template('/register_success.html)')
 
 
+#------------------- BOOKING ROUTES -------------------#
+
+@app.route('/booking/<int:user_id>/<int:space_id>', methods=["GET"])
+def get_booking_form(user_id, space_id):
+    return render_template('booking_form.html', user_id = user_id, space_id = space_id)
 
 
 
+@app.route('/post_booking/<int:user_id>/<int:space_id>', methods=["POST"])
+def post_booking(user_id, space_id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    date = request.form['date_booked']
+    booking = Booking(
+        None,
+        date,
+        'pending',
+        user_id,
+        space_id
+        )
+    booking = repo.create(booking)
+    return redirect(f'/booking_complete/{booking.id}')
+    
+    
+
+@app.route('/booking_complete/<int:id>', methods=['GET'])
+def get_booking(id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    booking = repo.get_booking(id)
+    return render_template('booking.html', booking = booking)
 
 
 
-
-
-
+@app.route('/booking_confirmed/<int:booking_id>', methods=["PUT"])
+def put_booking(booking_id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    booking = repo.confirm_booking(booking_id)
+    return '' , 200
 
     
     
