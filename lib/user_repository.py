@@ -24,6 +24,15 @@ class UserRepository:
                 raise Exception("This password does not comply with requirements! Must have at least 8 characters")
         else:
             raise Exception("This username has been taken!")
+        
+    def check_password(self, username, password):
+        # Check whether there is a user in the database with the given email
+        # and a matching password hash, using a SELECT statement.
+        rows = self._connection.execute(
+            'SELECT * FROM users WHERE username = %s AND password = %s',
+            [username, pass_hash(password)])
+        # If that SELECT finds any rows, the password is correct.
+        return len(rows) > 0
 
     def get_user_details(self, username):
         rows = self._connection.execute('select * from users where username = %s', [username])
