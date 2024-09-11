@@ -14,6 +14,16 @@ def test_create_unique_username(db_connection):
     error_msg = str(err.value)
     assert error_msg == "This username has been taken!"
 
+"""checking that email is not already in use"""
+
+def test_account_creation_duplicate_email(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    with pytest.raises(Exception) as err:
+        repository.create_user(User(None, "Hugh", "alex@example.com", "password1"))
+    error_msg = str(err.value)
+    assert error_msg == "This email is already in use."
+
 """ 
 create a successful user with details
 """

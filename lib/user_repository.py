@@ -15,13 +15,17 @@ class UserRepository:
         row = self._connection.execute('select * from users where username = %s', [user.username])
         # print(row)
         if row == []:
-            if len(user.password) >= 8:            
-                if any(elem in '!@$%&' for elem in user.password) == True:
-                    self._connection.execute('insert into users (username, email, password) values (%s, %s, %s)', [user.username, user.email, pass_hash(user.password)])
+            row = self._connection.execute('select * from users where email = %s', [user.email])
+            if row == []:
+                if len(user.password) >= 8:            
+                    if any(elem in '!@$%&' for elem in user.password) == True:
+                        self._connection.execute('insert into users (username, email, password) values (%s, %s, %s)', [user.username, user.email, pass_hash(user.password)])
+                    else:
+                        raise Exception("This password does not comply with requirements! Must have at least one special character")
                 else:
-                    raise Exception("This password does not comply with requirements! Must have at least one special character")
+                    raise Exception("This password does not comply with requirements! Must have at least 8 characters")
             else:
-                raise Exception("This password does not comply with requirements! Must have at least 8 characters")
+                raise Exception("This email is already in use.")
         else:
             raise Exception("This username has been taken!")
         
