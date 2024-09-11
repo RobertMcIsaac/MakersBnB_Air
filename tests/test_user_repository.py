@@ -22,7 +22,7 @@ def test_create_user_success(db_connection):
     db_connection.seed("seeds/air_makersbnb_test.sql")
     repository = UserRepository(db_connection)
     repository.create_user(User(None, "Liam", "liamemail@email.com", "passwo34@5"))
-    assert repository.get_user_details("Liam") == User(7, "Liam", "liamemail@email.com", "passwo34@5")
+    assert repository.get_user_details("Liam") == User(7, "Liam", "liamemail@email.com", pass_hash("passwo34@5"))
 
 """
 test password does not met special character requirement, raises an error
@@ -65,7 +65,7 @@ def test_update_password_success(db_connection):
     repository = UserRepository(db_connection)
     user = repository.update_password("Alex", "qwertyuiop!")
     updated_profile = repository.get_user_details("Alex")
-    assert updated_profile == User(3, "Alex", "alex@example.com", "qwertyuiop!")
+    assert updated_profile == User(3, "Alex", "alex@example.com", pass_hash("qwertyuiop!"))
 
 """test that password can be updated incorrectly (special characters)"""
 def test_update_password_fail_special(db_connection):

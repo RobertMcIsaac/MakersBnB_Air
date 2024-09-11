@@ -1,5 +1,11 @@
 from lib.space import Space
 from lib.user import User
+import hashlib
+
+def pass_hash(password):
+    binary_password = password.encode("utf-8")
+    return hashlib.sha256(binary_password).hexdigest()
+
 class UserRepository:
 
     def __init__(self, connection):
@@ -11,11 +17,11 @@ class UserRepository:
         if row == []:
             if len(user.password) >= 8:            
                 if any(elem in '!@$%&' for elem in user.password) == True:
-                    self._connection.execute('insert into users (username, email, password) values (%s, %s, %s)', [user.username, user.email, user.password])
+                    self._connection.execute('insert into users (username, email, password) values (%s, %s, %s)', [user.username, user.email, pass_hash(user.password)])
                 else:
                     raise Exception("This password does not comply with requirements! Must have at least one special character")
             else:
-                    raise Exception("This password does not comply with requirements! Must have at least 8 characters")
+                raise Exception("This password does not comply with requirements! Must have at least 8 characters")
         else:
             raise Exception("This username has been taken!")
 
@@ -32,7 +38,7 @@ class UserRepository:
         if row != []:
             if len(new_password) >= 8:            
                 if any(elem in '!@$%&' for elem in new_password) == True:
-                    self._connection.execute('update users set password = %s where username = %s', [new_password, username])
+                    self._connection.execute('update users set password = %s where username = %s', [pass_hash(new_password), username])
                 else:
                     raise Exception("This password does not comply with requirements! Must have at least one special character")
             else:
