@@ -1,9 +1,8 @@
 import os
-from flask import Flask, jsonify, redirect, request, render_template, redirect
+from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
-from lib import space
 from lib.space_repository import SpaceRepository
 from lib.user import User
 from lib.user_repository import UserRepository
