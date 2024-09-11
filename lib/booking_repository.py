@@ -23,10 +23,8 @@ class BookingRepository():
         booking.id = row['id']
         return booking
     
-    # We should probably just initialise booking_status as 'pending' by default directly in Booking init method
     def confirm_booking(self, id):
-        self._connection.execute(
+        rows = self._connection.execute(
             'UPDATE bookings SET booking_status = %s WHERE id = %s',
             ['confirmed', id]
             )
-        

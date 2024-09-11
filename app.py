@@ -32,7 +32,9 @@ def post_booking(user_id, space_id):
         space_id
         )
     booking = repo.create(booking)
-    return redirect(f"/booking/{booking.id}")
+    return render_template("booking.html", booking = booking)
+    # return '', 200
+
 
 
 # These lines start the server if you run this file directly
