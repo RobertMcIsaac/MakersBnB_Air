@@ -1,3 +1,4 @@
+from lib.space import Space
 from lib.user import User
 class UserRepository:
 
@@ -20,8 +21,11 @@ class UserRepository:
 
     def get_user_details(self, username):
         rows = self._connection.execute('select * from users where username = %s', [username])
-        row = rows[0]
-        return User(row["id"], row["username"], row["email"], row["password"])
+        if rows == []:
+            return None
+        else:
+            row = rows[0]
+            return User(row["id"], row["username"], row["email"], row["password"])
     
     def update_password(self, username, new_password):
         row = self._connection.execute('select * from users where username = %s', [username])
@@ -35,3 +39,19 @@ class UserRepository:
                 raise Exception("This password does not comply with requirements! Must have at least 8 characters")
         else:
             raise Exception("User not found.")
+        
+
+    def delete_account(self, username):
+        self._connection.execute('delete from users where username = %s', [username])
+    
+    def list_spaces_by_user(self, username):
+        list_of_spaces = []
+        user_id = self._connection.execute('select id from users where username = %s', [username])
+        better_user_id = user_id[0]['id']
+        rows = self._connection.execute('select * from spaces where user_id = %s',[better_user_id])
+        # return rows
+        for row in rows:
+            item = Space(row["id"], row["name"], row["description"],row["price"], row["user_id"])
+            list_of_spaces.append(item)
+        return list_of_spaces
+

@@ -1,3 +1,4 @@
+from lib.space import Space
 from lib.user import User
 from lib.user_repository import *
 import pytest
@@ -93,3 +94,24 @@ def test_update_password_fail_user(db_connection):
         user = repository.update_password("Bob Dylan", "we")
     error_msg = str(err.value)
     assert error_msg == "User not found."
+
+""" 
+Test successful deletion of an account
+"""
+def test_user_details_deletion(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    repository.delete_account("Avnita")
+    account = repository.get_user_details("Avnita")
+    assert account == None
+
+"""
+test spaces posted by a specfic user
+"""
+def test_list_all_user_spaces(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    user = repository.list_spaces_by_user("Rob")
+    assert user == [Space(5, 'Private Office', 'A compact office space for individual work', 18.00, 2), 
+                    Space(6, 'Garden Den', 'A shed in my garden', 180.00, 2), 
+                    Space(7, 'Cupboard', 'A crappy cupboard underneath the stairs', 150.00, 2)]
