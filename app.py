@@ -1,10 +1,11 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
-from lib import space
 from lib.space_repository import SpaceRepository
+from lib.user import User
+from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -47,6 +48,45 @@ def get_spaces():
     list_of_spaces = repository.all()
 
     return render_template('spaces.html', spaces=list_of_spaces)
+
+@app.route('/register')
+def get_register_page():
+    return render_template('/register.html')
+
+@app.route('/register', methods=["POST"])
+def register_user():
+    connection = get_flask_database_connection(app)
+    repository = UserRepository(connection)
+
+    username = request.form["username"]
+    email = request.form["email"]
+    password = request.form["password"]
+
+    user = User(None, username, email, password)
+
+    try:
+        repository.create_user(user)
+        return render_template("/register_success.html")
+    
+    except Exception as e:
+        error = str(e)
+        return render_template("/error.html", error=e)
+
+
+
+@app.route('/register_success')
+def register_successful():
+    return render_template('/register_success.html)')
+
+
+
+
+
+
+
+
+
+
 
 
 
