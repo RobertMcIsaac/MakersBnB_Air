@@ -32,7 +32,7 @@ def test_post_booking(db_connection, page, test_web_address):
     page.goto(f'https://{test_web_address}/booking')
     page.fill('input[name=booking_date]', '2025-09-20')
     page.click("text='Make Booking")
-    p = page.locator("p")
+    p = page.locator("h2")
     expect(p).to_have_text("Your booking is pending. Please wait for confirmation")
 
     # page.click("text='add new album'")
@@ -44,7 +44,7 @@ def test_post_booking(db_connection, page, test_web_address):
 """
 PUT/ update booking status
 """
-=======
+
 """
     SPACES MAIN PAGE
     Request : GET

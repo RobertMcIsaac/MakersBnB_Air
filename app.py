@@ -23,21 +23,43 @@ def get_index():
 
 
 # BOOKING ROUTES
-@app.route('/booking/<int:user_id>/<int:space_id>', methods=["POST"])
+
+@app.route('/booking/<int:user_id>/<int:space_id>', methods=["GET"])
+def get_booking_form(user_id, space_id):
+    return render_template('booking_form.html', user_id = user_id, space_id = space_id)
+
+@app.route('/post_booking/<int:user_id>/<int:space_id>', methods=["POST"])
 def post_booking(user_id, space_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
+    date = request.form['date_booked']
     booking = Booking(
         None,
-        request.form['date_booked'],
+        date,
         'pending',
         user_id,
         space_id
         )
     booking = repo.create(booking)
-    return render_template("booking.html", booking = booking)
+    return redirect(f'/booking_complete/{booking.id}')
+    # return render_template("booking.html", booking = booking)
     # return '', 200
+    
+    
 
+@app.route('/booking_complete/<int:id>', methods=['GET'])
+def get_booking(id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    booking = repo.get_booking(id)
+    return render_template('booking.html', booking = booking)
+
+@app.route('/booking_confirmed/<int:booking_id>', methods=["PUT"])
+def put_booking(booking_id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    booking = repo.confirm_booking(booking_id)
+    return '' , 200
 
 # SPACES MAIN PAGE
 @app.route('/spaces')
@@ -89,6 +111,11 @@ def register_successful():
 
 
 
+    
+    
+
+# space needs to display available bookings (get) via user id
+# user_id to find there spaces -> space_id to find available bookings -> for that space  
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

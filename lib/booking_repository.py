@@ -11,6 +11,10 @@ class BookingRepository():
             all_bookings.append(item)
         return all_bookings
     
+    def get_booking(self, id):
+        rows = self._connection.execute('SELECT * FROM bookings WHERE id = %s', [id])
+        return rows[0]
+    
     def create(self, booking):
         rows = self._connection.execute(
             'INSERT INTO bookings \
