@@ -10,8 +10,8 @@ from lib.space import Space
 """
 def test_space_initialises_correctly():
 
-    space = Space("The Scottish Conversatory", "The extremely hot and extremely cold", 20.5, 1)
-
+    space = Space(8, "The Scottish Conversatory", "The extremely hot and extremely cold", 20.5, 1)
+    assert space.id == 8
     assert space.name == "The Scottish Conversatory"
     assert space.description == "The extremely hot and extremely cold"
     assert space.price == 20.50
@@ -23,8 +23,8 @@ def test_space_initialises_correctly():
 """
 def test_space_is_equal():
 
-    space1 = Space("The Scottish Conversatory", "The extremely hot and extremely cold", 20.5, 1)
-    space2 = Space("The Scottish Conversatory", "The extremely hot and extremely cold", 20.5, 1)
+    space1 = Space(8, "The Scottish Conversatory", "The extremely hot and extremely cold", 20.5, 1)
+    space2 = Space(8, "The Scottish Conversatory", "The extremely hot and extremely cold", 20.5, 1)
     
     assert space1 == space2
 
@@ -33,6 +33,6 @@ def test_space_is_equal():
 """
 def test_formats_nicely():
 
-    space = Space("The Scottish Conversatory", "The extremely hot and extremely cold", 20.5, 1)
+    space = Space(8, "The Scottish Conversatory", "The extremely hot and extremely cold", 20.5, 1)
 
-    assert str(space) == "Space(The Scottish Conversatory, The extremely hot and extremely cold, 20.5, 1)"
+    assert str(space) == "Space(8, The Scottish Conversatory, The extremely hot and extremely cold, 20.5, 1)"

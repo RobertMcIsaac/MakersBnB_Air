@@ -9,7 +9,7 @@ class SpaceRepository():
         rows = self._connection.execute("SELECT * FROM spaces")
         spaces = []
         for row in rows:
-            space = Space(row["name"], row["description"], row["price"], row["user_id"])
+            space = Space(row["id"], row["name"], row["description"], row["price"], row["user_id"])
             spaces.append(space)
         return spaces
     
@@ -20,4 +20,4 @@ class SpaceRepository():
     # find with owner
     def find_with_user_id(self, id):
         rows = self._connection.execute("SELECT * FROM spaces WHERE user_id = %s", [id])
-        return [Space(row["name"], row["description"], row["price"], row["user_id"]) for row in rows]
+        return [Space(row["id"], row["name"], row["description"], row["price"], row["user_id"]) for row in rows]
