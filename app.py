@@ -20,7 +20,7 @@ def get_index():
 
 
 # BOOKING ROUTES
-@app.route('/booking/<int:user_id>/<int:space_id>', methods=["POST"])
+@app.route('/booking/display/<int:user_id>/<int:space_id>', methods=["POST"])
 def post_booking(user_id, space_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
@@ -34,8 +34,17 @@ def post_booking(user_id, space_id):
     booking = repo.create(booking)
     return render_template("booking.html", booking = booking)
     # return '', 200
+    
+    
+@app.route('/booking_completed/<int:booking_id>', methods=["PUT"])
+def put_booking(booking_id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    booking = repo.confirm_booking(booking_id)
+    return '' , 200
 
-
+# space needs to display available bookings (get) via user id
+# user_id to find there spaces -> space_id to find available bookings -> for that space  
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
