@@ -38,12 +38,18 @@ CREATE TABLE bookings (
     on delete cascade
 );
 
-INSERT INTO users (username, email, password) VALUES ('Sam', 'sam@example.com', 'password123!');
-INSERT INTO users (username, email, password) VALUES ('Rob', 'rob@example.com', 'password45%6');
-INSERT INTO users (username, email, password) VALUES ('Alex', 'alex@example.com', 'password£7£89');
-INSERT INTO users (username, email, password) VALUES ('Avnita', 'avnita@example.com', 'passwor$d321');
-INSERT INTO users (username, email, password) VALUES ('Tom', 'tom@example.com', 'password65^4');
-INSERT INTO users (username, email, password) VALUES ('Khari', 'khari@example.com', 'passwo!r^^d987');
+INSERT INTO users (username, email, password) VALUES ('Sam', 'sam@example.com', '5751a44782594819e4cb8aa27c2c9d87a420af82bc6a5a05bc7f19c3bb00452b');
+-- original password before is password123! 
+INSERT INTO users (username, email, password) VALUES ('Rob', 'rob@example.com', '588de65968beb9699bca6d4c59e842fedd42715fa25ca72751eab4c200986f89');
+-- original password before is password45%6
+INSERT INTO users (username, email, password) VALUES ('Alex', 'alex@example.com', '6df39f96b4be04ab9fb801b461967c5b4761b92af7624af4901c08ae49fbd1e3');
+-- original password before is password£7£89 
+INSERT INTO users (username, email, password) VALUES ('Avnita', 'avnita@example.com', '31a99a735d4a59d1d15e9cc7e992401c169ae01115550c1348a2ce00c46d7ef5');
+-- original password before is passwor$d321
+INSERT INTO users (username, email, password) VALUES ('Tom', 'tom@example.com', 'ae62d1f9b0d68b63cb4e6a6e2fa7594578c8fd95325195055b812f0259e67c60');
+-- original password before is password65^4
+INSERT INTO users (username, email, password) VALUES ('Khari', 'khari@example.com', '038ad83b9e0dbc76bfefdce8b037e00aef5a5337cf6466763d412c621dd08250');
+-- original password before is passwo!r^^d987
 
 INSERT INTO spaces (name, description, price, user_id) VALUES ('Cozy Apartment', 'A small, comfortable apartment in the city center', 120, 1);
 INSERT INTO spaces (name, description, price, user_id) VALUES ('Modern Office', 'A sleek office space with a view', 250, 4);

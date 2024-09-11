@@ -1,3 +1,4 @@
+from lib.space import Space
 from lib.user import User
 from lib.user_repository import *
 import pytest
@@ -21,7 +22,7 @@ def test_create_user_success(db_connection):
     db_connection.seed("seeds/air_makersbnb_test.sql")
     repository = UserRepository(db_connection)
     repository.create_user(User(None, "Liam", "liamemail@email.com", "passwo34@5"))
-    assert repository.get_user_details("Liam") == User(7, "Liam", "liamemail@email.com", "passwo34@5")
+    assert repository.get_user_details("Liam") == User(7, "Liam", "liamemail@email.com", pass_hash("passwo34@5"))
 
 """
 test password does not met special character requirement, raises an error
@@ -55,7 +56,7 @@ def test_read_user_details(db_connection):
     db_connection.seed("seeds/air_makersbnb_test.sql")
     repository = UserRepository(db_connection)
     user = repository.get_user_details("Alex")
-    assert user == User(3, "Alex", "alex@example.com", "password£7£89")
+    assert user == User(3, "Alex", "alex@example.com", "6df39f96b4be04ab9fb801b461967c5b4761b92af7624af4901c08ae49fbd1e3")
 
 
 """test that password can be updated correctly"""
@@ -64,7 +65,7 @@ def test_update_password_success(db_connection):
     repository = UserRepository(db_connection)
     user = repository.update_password("Alex", "qwertyuiop!")
     updated_profile = repository.get_user_details("Alex")
-    assert updated_profile == User(3, "Alex", "alex@example.com", "qwertyuiop!")
+    assert updated_profile == User(3, "Alex", "alex@example.com", pass_hash("qwertyuiop!"))
 
 """test that password can be updated incorrectly (special characters)"""
 def test_update_password_fail_special(db_connection):
@@ -93,3 +94,43 @@ def test_update_password_fail_user(db_connection):
         user = repository.update_password("Bob Dylan", "we")
     error_msg = str(err.value)
     assert error_msg == "User not found."
+
+""" 
+Test successful deletion of an account
+"""
+def test_user_details_deletion(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    repository.delete_account("Avnita")
+    account = repository.get_user_details("Avnita")
+    assert account == None
+
+"""
+test spaces posted by a specfic user
+"""
+def test_list_all_user_spaces(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    user = repository.list_spaces_by_user("Rob")
+    assert user == [Space(5, 'Private Office', 'A compact office space for individual work', 18.00, 2), 
+                    Space(6, 'Garden Den', 'A shed in my garden', 180.00, 2), 
+                    Space(7, 'Cupboard', 'A crappy cupboard underneath the stairs', 150.00, 2)]
+    
+
+""" 
+test to check password used for log in
+"""
+def test_check_password_used_for_login_success(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    user = repository.check_password("Alex", "password£7£89")
+    assert user == True
+
+""" 
+test to check password used for log in fails
+"""
+def test_check_password_for_login_failure(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repository = UserRepository(db_connection)
+    user = repository.check_password("Alex", "hj344uh")
+    assert user == False
