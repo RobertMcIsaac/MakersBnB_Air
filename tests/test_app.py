@@ -15,6 +15,21 @@ def test_get_index(page, test_web_address):
     # We assert that it has the text "This is the homepage."
     expect(p_tag).to_have_text("This is the homepage.")
 
+# LOGIN TESTS
+
+"""GET/ login page"""
+
+def test_render_login_page_successfully(db_connection, page, test_web_address):
+    db_connection.seed('seeds/air_makersbnb_test.sql')
+    page.goto(f'https://{test_web_address}/login')
+    h2_tag = page.locator("h2")
+    expect(h2_tag).to_have_text("Login")
+    input_email_tag = page.locator(".t-email")
+    expect(input_email_tag).to_have_text("Email:")
+    input_password_tag = page.locator(".t-password")
+    expect(input_password_tag).to_have_text("Password:")
+    submit_button_tag = page.locator(".t-submit")
+    expect(submit_button_tag).to_have_text("Submit")
 
 
 # BOOKING TESTS

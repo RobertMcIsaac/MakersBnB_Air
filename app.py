@@ -20,6 +20,12 @@ app = Flask(__name__)
 def get_index():
     return render_template('index.html')
 
+#------------------- LOGIN ROUTES -------------------#
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 
 #------------------- SPACES ROUTES -------------------#
 
