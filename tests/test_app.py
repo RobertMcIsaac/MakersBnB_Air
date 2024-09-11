@@ -111,8 +111,80 @@ def test_register_page(page, test_web_address):
     input_password_tag = page.locator("input[name='password']")
     input_password_tag.fill("pasw0rd!2#")
  
-    page.click("button[type='submit']")
+    page.click("text='Submit'")
 
-    expect(page).to_have_url("/register_success")
     p_tag = page.locator("p")
     expect(p_tag).to_have_text("Successfully created an account")
+
+
+"""
+    REGISTER VALIDATION -- password fails validation, URL remains the same
+"""
+def test_password_throws_validation_errors(page, test_web_address):
+    page.set_default_timeout(1000)
+
+    page.goto(f"http://{test_web_address}/register")
+
+    input_username_tag = page.locator("input[name='username']")
+    input_username_tag.fill('Bobby')
+
+    input_email_tag = page.locator("input[name='email']")
+    input_email_tag.fill("bobby@example.com")
+
+    input_password_tag = page.locator("input[name='password']")
+
+    # ---- TESTING INVALID PASSWORD
+    input_password_tag.fill("pass")
+ 
+    page.click("text='Submit'")
+
+    expect(page).to_have_url(f"http://{test_web_address}/register")
+
+
+"""
+    REGISTER VALIDATION -- username fails validation, URL remains the same
+"""
+def test_username_throws_validation_errors(page, test_web_address):
+    page.set_default_timeout(1000)
+
+    page.goto(f"http://{test_web_address}/register")
+
+    input_username_tag = page.locator("input[name='username']")
+
+    # ----- TESTING DUPLICATE USERNAME
+    input_username_tag.fill('Sam')
+
+    input_email_tag = page.locator("input[name='email']")
+    input_email_tag.fill("bobby@example.com")
+
+    input_password_tag = page.locator("input[name='password']")
+    input_password_tag.fill("passworfhiene!@")
+ 
+    page.click("text='Submit'")
+
+    expect(page).to_have_url(f"http://{test_web_address}/register")
+
+
+"""
+    REGISTER VALIDATION -- email fails validation, URL remains the same
+"""
+def test_email_throws_validation_errors(page, test_web_address):
+    page.set_default_timeout(1000)
+
+    page.goto(f"http://{test_web_address}/register")
+
+    input_username_tag = page.locator("input[name='username']")
+
+    input_username_tag.fill('Sam')
+
+    input_email_tag = page.locator("input[name='email']")
+
+    # ----- TESTING DUPLICATE EMAIL
+    input_email_tag.fill("sam@example.com")
+
+    input_password_tag = page.locator("input[name='password']")
+    input_password_tag.fill("passworfhiene!@")
+ 
+    page.click("text='Submit'")
+
+    expect(page).to_have_url(f"http://{test_web_address}/register")

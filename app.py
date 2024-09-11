@@ -57,7 +57,7 @@ def register_user():
     
     except Exception as e:
         error = str(e)
-        return render_template("/error.html", error=e)
+        return render_template("/register.html", error=error)
 
 
 
