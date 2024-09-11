@@ -3,6 +3,8 @@ from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
+from lib import space
+from lib.space_repository import SpaceRepository
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -34,6 +36,19 @@ def post_booking(user_id, space_id):
     booking = repo.create(booking)
     return render_template("booking.html", booking = booking)
     # return '', 200
+
+
+# SPACES MAIN PAGE
+@app.route('/spaces')
+def get_spaces():
+
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+    list_of_spaces = repository.all()
+
+    return render_template('spaces.html', spaces=list_of_spaces)
+
+
     
     
 @app.route('/booking_completed/<int:booking_id>', methods=["PUT"])
@@ -51,3 +66,5 @@ def put_booking(booking_id):
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5001)))
+
+
