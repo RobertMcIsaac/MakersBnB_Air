@@ -5,6 +5,7 @@ class Booking():
     def __init__(self, id, date_booked, booking_status, user_id, space_id) -> None:        
         self.id = id
         self.date_booked = date_booked
+        # maybe we should just init booking_status as 'pending' and then chnage to 'confirmed' when necessary in a repo method
         self.booking_status = self.is_valid(booking_status)        
         self.user_id = user_id
         self.space_id = space_id

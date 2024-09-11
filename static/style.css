@@ -1,3 +1,12 @@
 body {
     font-size: 18px;
 }
+.booking-body {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    background-color: blanchedalmond;
+}
+h1{
+    color: brown;
+}
