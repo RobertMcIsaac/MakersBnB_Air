@@ -28,11 +28,13 @@ def login():
 
 @app.route('/login', methods=['POST'])
 def login_post():
+    connection = get_flask_database_connection(app)
+    repo = UserRepository(connection)
     username = request.form['username']
     password = request.form['password']
 
-    if UserRepository.check_password(username, password):
-        user = UserRepository.get_user_details(username)
+    if repo.check_password(username, password) == True:
+        user = repo.get_user_details(username)
         # Set the user ID in session
         session['user_id'] = user.id
 

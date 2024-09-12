@@ -33,7 +33,7 @@ class UserRepository:
         # Check whether there is a user in the database with the given username
         # and a matching password hash, using a SELECT statement.
         rows = self._connection.execute(
-            'SELECT * FROM users WHERE username = %s AND password = %s',
+            'select * from users where username = %s and password = %s',
             [username, pass_hash(password)])
         # If that SELECT finds any rows, the password is correct.
         return len(rows) > 0
