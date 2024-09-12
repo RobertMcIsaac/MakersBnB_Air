@@ -33,7 +33,11 @@ booking_status is can only be pending or confirmed
 """
 def test_date_booked_is_either_pending_or_confirmed():
     booking_1 = Booking(2, '2024-12-10', 'pending', 1, 3 )
+    assert booking_1.booking_status == "pending"
+
     booking_2 = Booking(2, '2024-12-10', 'confirmed', 1, 3 )
+    assert booking_2.booking_status == "confirmed"
+    
     with pytest.raises(Exception) as error:
         booking_3 = Booking(2, '2024-12-10', 'incorrect', 1, 3 )
     error_message = str(error.value)

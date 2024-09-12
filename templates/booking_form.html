@@ -11,7 +11,7 @@
     </head>
     <body class="booking-body">
         <form action="{{ url_for('post_booking', user_id=user_id, space_id=space_id) }}" method="POST">
-            <label for="date_booked">Date Booked:</label>
+            <label for="date_booked">Date</label>
             <input type="text" name="date_booked" id="date_booked" required>
             <input type="submit" value="Confirm booking">
         </form>
