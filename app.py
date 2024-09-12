@@ -143,13 +143,13 @@ def register_successful():
 
 #------------------- BOOKING ROUTES -------------------#
 
-@app.route('/booking/<int:user_id>/<int:space_id>', methods=["GET"])
-def get_booking_form(user_id, space_id):
-    return render_template('booking_form.html', user_id = user_id, space_id = space_id)
+@app.route('/booking/<int:space_id>', methods=["GET"])
+def get_booking_form(space_id):
+    return render_template('booking_form.html', user_id = session["user_id"], space_id = space_id)
 
 
-@app.route('/post_booking/<int:user_id>/<int:space_id>', methods=["POST"])
-def post_booking(user_id, space_id):
+@app.route('/post_booking/<int:space_id>', methods=["POST"])
+def post_booking(space_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     date = request.form['date_booked']
@@ -159,18 +159,18 @@ def post_booking(user_id, space_id):
         None,
         date,
         'pending',
-        user_id,
+        session["user_id"],
         space_id
         )
     try: 
         booking = repo.create(booking)
         print(repo.is_date_unavailable(booking))
-        return redirect(f'/booking_complete/{booking.id}')
+        return redirect(f'/booking_complete/{booking.id}')``
     except Exception as e:
         error =  str(e)
         # pass error in html
         print(repo.is_date_unavailable(booking))
-        return render_template('booking_form.html', user_id=user_id, space_id=space_id, error=error)
+        return render_template('booking_form.html', space_id=space_id, error=error)
     
     
 
