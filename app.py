@@ -10,6 +10,7 @@ from lib.user_repository import UserRepository
 
 # Create a new Flask app
 app = Flask(__name__)
+app.secret_key = 'super secret key'
 
 # == Your Routes Here ==
 
@@ -179,5 +180,7 @@ def put_booking(booking_id):
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5001)))
+    
+    app.config['SESSION_TYPE'] = 'filesystem'
 
-
+    session.init_app(app)
