@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from lib.database_connection import get_flask_database_connection
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
@@ -26,6 +26,28 @@ def get_index():
 def login():
     return render_template('login.html')
 
+@app.route('/login', methods=['POST'])
+def login_post():
+    username = request.form['username']
+    password = request.form['password']
+
+    if UserRepository.check_password(username, password):
+        user = UserRepository.get_user_details(username)
+        # Set the user ID in session
+        session['user_id'] = user.id
+
+        return render_template('index.html')
+    else:
+        errors = "Incorrect username or password"
+        return render_template('login.html', errors=errors)
+
+# if title == "" or release_year == "" or artist_id == "":
+#         errors = "Title, release year and artist id cannot be blank"
+#         return render_template('/albums/new.html', errors=errors)
+    
+#     album = Album(None, title, release_year, artist_id)
+#     repo.create_album(album)
+#     return redirect(f"/single_album/{album.id}")
 
 #------------------- SPACES ROUTES -------------------#
 

@@ -30,7 +30,7 @@ class UserRepository:
             raise Exception("This username has been taken!")
         
     def check_password(self, username, password):
-        # Check whether there is a user in the database with the given email
+        # Check whether there is a user in the database with the given username
         # and a matching password hash, using a SELECT statement.
         rows = self._connection.execute(
             'SELECT * FROM users WHERE username = %s AND password = %s',
