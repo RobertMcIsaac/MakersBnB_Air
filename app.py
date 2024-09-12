@@ -19,7 +19,7 @@ app.secret_key = 'super secret key'
 # Returns the homepage
 # Try it:
 #   ; open http://localhost:5001/index
-@app.route('/index', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_index():
     return render_template('index.html')
 
@@ -41,7 +41,8 @@ def login_post():
         # Set the user ID in session
         session['user_id'] = user.id
 
-        return render_template('index.html')
+        # return render_template('spaces.html')
+        return redirect(location="/spaces")
     else:
         errors = "Incorrect username or password"
         return render_template('login.html', errors=errors)

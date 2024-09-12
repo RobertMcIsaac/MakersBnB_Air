@@ -61,6 +61,7 @@ button {
     padding: 0;
     margin-left: 10px;
     margin-right: 10px;
+    max-width: 50px;
 }
 .signin-button:hover, .login-button:hover {
     color: grey;
