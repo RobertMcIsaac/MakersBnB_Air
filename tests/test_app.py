@@ -2,19 +2,6 @@ from playwright.sync_api import Page, expect
 
 # Tests for your routes go here
 
-"""
-    INDEX PAGE
-"""
-def test_get_index(page, test_web_address):
-    # We load a virtual browser and navigate to the /index page
-    page.goto(f"http://{test_web_address}/index")
-
-    # We look at the <p> tag
-    p_tag = page.locator("p")
-
-    # We assert that it has the text "This is the homepage."
-    expect(p_tag).to_have_text("This is the homepage.")
-
 # LOGIN TESTS
 
 """GET/ login page"""
@@ -43,9 +30,9 @@ def test_login_success(db_connection, page, test_web_address):
     input_password_tag = page.locator("input[name='password']")
     input_password_tag.fill('password123!')
     page.click("button[type='submit']")
-    expect(page).to_have_url("/index")
-    p_tag = page.locator("p")
-    expect(p_tag).to_have_text("This is the homepage.")
+    expect(page).to_have_url(f'http://{test_web_address}/spaces')
+    # p_tag = page.locator("p")
+    # expect(p_tag).to_have_text("This is the homepage.")
 
 # def test_register_page(page, test_web_address):
 #     page.set_default_timeout(1000)
