@@ -10,14 +10,14 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
     <body>
-
+        <a href="/create_space"><button>Create a space</button></a>
         {% for space in spaces %}
 
-            <h3>{{ space.name }}</h3>
+            <a href="/spaces/{{space.id}}"><h3>{{ space.name }}</h3></a>
             <h5>{{ space.price }}</h5>
             <p>{{ space.description }}</p>
 
         {% endfor %}
 
     </body>
-</html>
+</html>`
