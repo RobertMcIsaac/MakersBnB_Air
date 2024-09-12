@@ -21,3 +21,9 @@ class SpaceRepository():
     def find_with_user_id(self, id):
         rows = self._connection.execute("SELECT * FROM spaces WHERE user_id = %s", [id])
         return [Space(row["id"], row["name"], row["description"], row["price"], row["user_id"]) for row in rows]
+
+    # find by space_id
+    def find(self, id):
+        rows = self._connection.execute("SELECT * FROM spaces WHERE id = %s", [id])
+        row = rows[0]
+        return Space(row["id"], row["name"], row["description"], row["price"], row["user_id"])

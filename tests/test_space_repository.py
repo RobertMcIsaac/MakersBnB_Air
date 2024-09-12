@@ -52,3 +52,13 @@ def test_find_all_by_owner(db_connection):
         Space(6,'Garden Den', 'A shed in my garden', 180, 2),
         Space(7, 'Cupboard', 'A crappy cupboard underneath the stairs', 150, 2),
     ]
+
+"""
+    Find space by space_id
+"""
+def test_find_by_id(db_connection):
+    db_connection.seed("seeds/air_makersbnb_test.sql")
+    repo = SpaceRepository(db_connection)
+    space = repo.find(2)
+    assert space == Space(2, 'Modern Office', 'A sleek office space with a view', 250, 4)
+    
