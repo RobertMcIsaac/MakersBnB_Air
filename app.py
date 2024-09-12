@@ -66,7 +66,7 @@ def create_space_successful():
 
 
 @app.route('/spaces/<int:id>')
-def view_space():
+def view_space(id):
 
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
