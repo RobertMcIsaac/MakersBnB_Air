@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
+from lib.space import Space
 from lib.space_repository import SpaceRepository
 from lib.user import User
 from lib.user_repository import UserRepository
@@ -31,6 +32,36 @@ def get_spaces():
     list_of_spaces = repository.all()
 
     return render_template('spaces.html', spaces=list_of_spaces)
+
+@app.route('/create_space')
+def get_create_space():
+    return render_template('/create_space.html')
+
+@app.route('/create_space', methods=["POST"])
+def create_space():
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+
+    name = request.form["name"]
+    description = request.form["description"]
+    price = request.form["price"]
+    user_id = request.form["user_id"]
+
+    space = Space(None, name, description, price, user_id)
+
+    try:
+        repository.create(space)
+        return render_template("/create_space_success.html")
+    
+    except Exception as e:
+        error = str(e)
+        return render_template("/create_space.html", error=error)
+
+
+@app.route('/create_space_success')
+def create_space_successful():
+    return render_template('/create_space_success.html)')
+
 
 #------------------- REGISTER ROUTES -------------------#
 

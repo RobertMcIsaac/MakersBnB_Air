@@ -91,6 +91,35 @@ def test_spaces_page(page, test_web_address):
     ])
 
 """
+    Create Space succes
+"""
+
+def test_create_space_successful(page, test_web_address):
+    page.set_default_timeout(1000)
+
+    page.goto(f"http://{test_web_address}/create_space")
+
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("Create a space")
+
+    input_name_tag = page.locator("input[name='name']")
+    input_name_tag.fill('Bobbies House')
+
+    input_description_tag = page.locator("input[name='description']")
+    input_description_tag.fill("Bobbies lovely cold house")
+
+    input_price_tag = page.locator("input[name='price']")
+    input_price_tag.fill("12.00")
+    
+    input_user_id_tag = page.locator("input[name='user_id']")
+    input_user_id_tag.fill("1")
+ 
+    page.click("text='Create space'")
+
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text("Successfully created a space")
+
+"""
     Register page
 """
 
@@ -188,3 +217,4 @@ def test_email_throws_validation_errors(page, test_web_address):
     page.click("text='Submit'")
 
     expect(page).to_have_url(f"http://{test_web_address}/register")
+
