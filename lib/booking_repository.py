@@ -35,21 +35,22 @@ class BookingRepository():
             ['confirmed', id]
             )
 
-    # def is_date_unavailable(self, booking):
-    #     rows = self._connection.execute(
-    #         'SELECT * FROM bookings \
-    #             WHERE booking_status = %s AND space_id = %s',
-    #             ['confirmed', booking.space_id]
-    #             )
-    #     unavailable_dates = [row['date_booked'] for row in rows]
-    #     return booking.date_booked in unavailable_dates
+    def is_date_unavailable(self, booking):
+        rows = self._connection.execute(
+            'SELECT * FROM bookings \
+                WHERE booking_status = %s AND space_id = %s',
+                ['confirmed', booking.space_id]
+                )
+        unavailable_dates = [row['date_booked'] for row in rows]
 
-        def is_date_unavailable(self, booking):
-            rows = self._connection.execute(
-                # select specific date?
-                'SELECT * FROM bookings \
-                    WHERE booking_status = %s AND space_id = %s',
-                    ['confirmed', booking.space_id]
-                    )
-            unavailable_dates = [row['date_booked'] for row in rows]
-            return booking.date_booked in unavailable_dates
+        return booking.date_booked in unavailable_dates
+
+        # def is_date_unavailable(self, booking):
+        #     rows = self._connection.execute(
+        #         # select specific date?
+        #         'SELECT * FROM bookings \
+        #             WHERE booking_status = %s AND space_id = %s',
+        #             ['confirmed', booking.space_id]
+        #             )
+        #     unavailable_dates = [row['date_booked'] for row in rows]
+        #     return booking.date_booked in unavailable_dates
