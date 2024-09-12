@@ -7,6 +7,7 @@ from lib.space import Space
 from lib.space_repository import SpaceRepository
 from lib.user import User
 from lib.user_repository import UserRepository
+from datetime import datetime
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -135,12 +136,13 @@ def get_booking_form(user_id, space_id):
     return render_template('booking_form.html', user_id = user_id, space_id = space_id)
 
 
-
 @app.route('/post_booking/<int:user_id>/<int:space_id>', methods=["POST"])
 def post_booking(user_id, space_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     date = request.form['date_booked']
+    date_str = request.form['date_booked']
+    date = datetime.strptime(date_str, '%Y-%m-%d').date()    
     booking = Booking(
         None,
         date,
@@ -148,8 +150,15 @@ def post_booking(user_id, space_id):
         user_id,
         space_id
         )
-    booking = repo.create(booking)
-    return redirect(f'/booking_complete/{booking.id}')
+    try: 
+        booking = repo.create(booking)
+        print(repo.is_date_unavailable(booking))
+        return redirect(f'/booking_complete/{booking.id}')
+    except Exception as e:
+        error =  str(e)
+        # pass error in html
+        print(repo.is_date_unavailable(booking))
+        return render_template('booking_form.html', user_id=user_id, space_id=space_id, error=error)
     
     
 
@@ -173,7 +182,7 @@ def put_booking(booking_id):
     
 
 # space needs to display available bookings (get) via user id
-# user_id to find there spaces -> space_id to find available bookings -> for that space  
+# user_id to find their spaces -> space_id to find available bookings -> for that space  
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database

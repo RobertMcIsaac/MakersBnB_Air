@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 
 class Booking():
@@ -22,6 +22,5 @@ class Booking():
         else: 
             raise Exception("Incorrect value: please enter either 'pending' or 'confirmed'")
         
-    def convert_date(self):
-        # to be continued
-        pass
+    # def convert_date(self, date):
+    #     return datetime.strptime(date, '%Y-%m-%d').date()    

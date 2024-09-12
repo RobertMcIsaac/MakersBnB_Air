@@ -83,16 +83,19 @@ test that when we create a booking the form logs a booking_date
 def test_post_booking(db_connection, page, test_web_address):
     db_connection.seed('seeds/air_makersbnb_test.sql')
     page.goto(f'http://{test_web_address}/booking/1/2')
-    page.fill('input[name=date_booked]', '2025-09-20')
+    page.fill('input[name=date_booked]', '2025-10-20')
     page.click("text=Confirm booking")
     h2 = page.locator("h2")
     expect(h2).to_have_text("Your booking is pending. Please wait for confirmation")
 
-    # page.click("text='add new album'")
-    # page.fill("input[name=title]", "test album")
-    # page.fill("input[name=release_year]", "1999")
-    # page.fill("input[name=artist_id]", "3")
-    # page.click("text='click to add album'")
+def test_booking_date_unavailable(db_connection, page, test_web_address):
+    db_connection.seed('seeds/air_makersbnb_test.sql')
+    page.goto(f'http://{test_web_address}/booking/1/3')
+    page.fill('input[name=date_booked]', '2024-09-25')
+    page.click("text=Confirm booking")
+    h6 = page.locator("h6")
+    expect(h6).to_have_text("This date is unavailable. Please choose another date.")
+
 
 """
 PUT/ update booking status

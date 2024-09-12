@@ -10,7 +10,10 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body class="booking-body">
-        <form action="{{ url_for('post_booking', user_id=user_id, space_id=space_id) }}" method="POST">
+        <form action="{{ url_for('post_booking', user_id=user_id, space_id=space_id, error=error) }}" method="POST">
+            {% if error %}
+                <h6>{{ error }}</h6>
+            {% endif %}
             <label for="date_booked">Date</label>
             <input type="date" name="date_booked" id="date_booked" required>
             <input type="submit" value="Confirm booking">

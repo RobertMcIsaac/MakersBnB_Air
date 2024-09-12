@@ -17,7 +17,7 @@ class BookingRepository():
     
     def create(self, booking):
         if self.is_date_unavailable(booking):
-            raise Exception("This date is unavailable")
+            raise Exception("This date is unavailable. Please choose another date.")
         rows = self._connection.execute(
             'INSERT INTO bookings \
                 (date_booked, booking_status, user_id, space_id) \
@@ -42,4 +42,15 @@ class BookingRepository():
                 ['confirmed', booking.space_id]
                 )
         unavailable_dates = [row['date_booked'] for row in rows]
-        return booking.date_booked in unavailable_dates     
+
+        return booking.date_booked in unavailable_dates
+
+        # def is_date_unavailable(self, booking):
+        #     rows = self._connection.execute(
+        #         # select specific date?
+        #         'SELECT * FROM bookings \
+        #             WHERE booking_status = %s AND space_id = %s',
+        #             ['confirmed', booking.space_id]
+        #             )
+        #     unavailable_dates = [row['date_booked'] for row in rows]
+        #     return booking.date_booked in unavailable_dates

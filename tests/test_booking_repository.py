@@ -38,7 +38,7 @@ def test_booking_date_unavailable(db_connection):
     with pytest.raises(Exception) as error:
         repo.create(Booking(None, date(2024,9,25), 'confirmed', 3, 3))
     error_message = str(error.value)
-    assert error_message == "This date is unavailable"
+    assert error_message == "This date is unavailable. Please choose another date."
         
 def test_update_booking(db_connection):
     db_connection.seed('seeds/air_makersbnb_test.sql')
