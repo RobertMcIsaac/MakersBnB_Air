@@ -65,9 +65,11 @@ def get_spaces():
 
     return render_template('spaces.html', spaces=list_of_spaces)
 
+
 @app.route('/create_space')
 def get_create_space():
     return render_template('/create_space.html')
+
 
 @app.route('/create_space', methods=["POST"])
 def create_space():
@@ -94,6 +96,15 @@ def create_space():
 def create_space_successful():
     return render_template('/create_space_success.html)')
 
+
+@app.route('/spaces/<int:id>')
+def view_space(id):
+
+    connection = get_flask_database_connection(app)
+    repository = SpaceRepository(connection)
+
+    space = repository.find(id)
+    return render_template("/view_space.html", space=space)
 
 #------------------- REGISTER ROUTES -------------------#
 
