@@ -15,7 +15,60 @@ def test_get_index(page, test_web_address):
     # We assert that it has the text "This is the homepage."
     expect(p_tag).to_have_text("This is the homepage.")
 
+# LOGIN TESTS
 
+"""GET/ login page"""
+
+def test_render_login_page_successfully(page, test_web_address):
+    page.goto(f'http://{test_web_address}/login')
+    h1_tag = page.locator("h1")
+    expect(h1_tag).to_have_text("Login")
+    input_email_tag = page.get_by_text("Username")
+    expect(input_email_tag).to_be_visible()
+    input_password_tag = page.get_by_text("Password")
+    expect(input_password_tag).to_be_visible()
+    submit_button_tag = page.locator("button")
+    expect(submit_button_tag).to_have_text("Submit")
+
+"""
+POST login information successfully
+"""
+
+def test_login_success(db_connection, page, test_web_address):
+    page.set_default_timeout(1000)
+    db_connection.seed('seeds/air_makersbnb_test.sql')
+    page.goto(f'http://{test_web_address}/login')
+    input_username_tag = page.locator("input[name='username']")
+    input_username_tag.fill('Sam')
+    input_password_tag = page.locator("input[name='password']")
+    input_password_tag.fill('password123!')
+    page.click("button[type='submit']")
+    expect(page).to_have_url("/index")
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text("This is the homepage.")
+
+# def test_register_page(page, test_web_address):
+#     page.set_default_timeout(1000)
+
+#     page.goto(f"http://{test_web_address}/register")
+
+#     h1_tag = page.locator("h1")
+#     expect(h1_tag).to_have_text("Register")
+
+#     input_username_tag = page.locator("input[name='username']")
+#     input_username_tag.fill('Bobby')
+
+#     input_email_tag = page.locator("input[name='email']")
+#     input_email_tag.fill("bobby@example.com")
+
+#     input_password_tag = page.locator("input[name='password']")
+#     input_password_tag.fill("pasw0rd!2#")
+ 
+#     page.click("button[type='submit']")
+
+#     expect(page).to_have_url("/register_success")
+#     p_tag = page.locator("p")
+#     expect(p_tag).to_have_text("Successfully created an account")
 
 # BOOKING TESTS
 
