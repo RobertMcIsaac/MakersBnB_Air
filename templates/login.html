@@ -1,25 +1,29 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>MakersBnB-Air</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
+{% block title %}Login{% endblock %}
 
-<body>
-    <div>
-        <h1>Login</h1>
-        <form action="/login" method="post">
-            <label for="username">Username</label>
-            <input type="text" name="username" placeholder="username" />
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center vh-100 homepage_image">
+        <div class="card p-4 semi-transparent-card">
+            <div class="card-body">
+                <h1 class="card-title text-center">Login</h1>
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Username" required />
+                    </div>
 
-            <label for="password">Password:</label>
-            <input type="text" name="password" placeholder="password" />
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password" required />
+                    </div>
 
-            <button type="submit">Submit</button>
-        </form>
-        <p>{{errors}}</p>
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                </form>
+                <p class="text-danger mt-3">{{ errors }}</p>
+            </div>
+        </div>
     </div>
-</body>
-
-</html>
+{% endblock %}
