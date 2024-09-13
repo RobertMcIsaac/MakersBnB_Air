@@ -30,9 +30,7 @@ def test_login_success(db_connection, page, test_web_address):
     input_password_tag = page.locator("input[name='password']")
     input_password_tag.fill('password123!')
     page.click("button[type='submit']")
-    expect(page).to_have_url("/login")
-    p_tag = page.locator("p")
-    expect(p_tag).to_have_text("This is the homepage.")
+    expect(page).to_have_url(f"http://{test_web_address}/spaces")
 
 # def test_register_page(page, test_web_address):
 #     page.set_default_timeout(1000)
@@ -68,17 +66,19 @@ POST/ create booking
 test that when we create a booking the form logs a booking_date
 """
 def test_post_booking(db_connection, page, test_web_address):
+    page.set_default_timeout(1000)
     db_connection.seed('seeds/air_makersbnb_test.sql')
-    page.goto(f'http://{test_web_address}/booking/1/2')
-    page.fill('input[name=date_booked]', '2025-10-20')
+    page.goto(f'http://{test_web_address}/booking/2')
+    page.fill("input[name='date_booked']", '2025-10-20')
     page.click("text=Confirm booking")
     h2 = page.locator("h2")
     expect(h2).to_have_text("Your booking is pending. Please wait for confirmation")
 
 def test_booking_date_unavailable(db_connection, page, test_web_address):
+    page.set_default_timeout(1000)
     db_connection.seed('seeds/air_makersbnb_test.sql')
-    page.goto(f'http://{test_web_address}/booking/1/3')
-    page.fill('input[name=date_booked]', '2024-09-25')
+    page.goto(f'http://{test_web_address}/booking/3')
+    page.fill('input[name="date_booked"]', '2024-09-25')
     page.click("text=Confirm booking")
     h6 = page.locator("h6")
     expect(h6).to_have_text("This date is unavailable. Please choose another date.")
