@@ -1,15 +1,21 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>MakersBnB-Air</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
+{% block title %}Successful registration{% endblock %}
 
-<body>
-    <p>Successfully created a space</p>
-    <a action="button" href="/spaces/{{id}}">View space</a>
-    <a action="button" href="/spaces">Back to spaces</a>
-</body>
+{% include 'navbar.html' %}
 
-</html>
+<body class="container-fluid">
+    <main class="row">
+        {% block content %}
+        <div class="d-flex justify-content-center align-items-center vh-100 homepage_image">
+            <div class="card p-4 semi-transparent-card">
+                <div class="card-body text-center">
+                    <p class="card-text">Successfully created a space</p>
+                    <a href="/spaces/{{space.id}}" class="btn btn-primary">View space</a>
+                    <a href="/spaces" class="btn btn-primary">Back to spaces</a
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</main>
