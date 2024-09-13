@@ -139,6 +139,13 @@ def register_successful():
 def get_booking_form(space_id):
     return render_template('booking_form.html', user_id = session["user_id"], space_id = space_id)
 
+@app.route('/user_bookings/<user_id>', methods=['GET'])
+def get_all_by_id(user_id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    users_bookings = repo.all_by_id(user_id)
+    return render_template('user_bookings.html', users = users_bookings)
+    
 
 @app.route('/post_booking/<int:space_id>', methods=["POST"])
 def post_booking(space_id):
