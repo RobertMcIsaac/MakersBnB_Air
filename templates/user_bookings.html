@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="container-fluid vh-100 d-flex align-items-center homepage_image">
+    <div class="row w-100">
+        <div class="col-md-4 offset-md-1">
+            <div class="card p-4 shadow semi-transparent-card">
+                <div class="card-body text-center">
+                    <h1 class="card-title">MakersBnB</h1>
+                    <h3 class="card-subtitle mb-4">Confirm booking</h3>
+                    <div class="d-grid gap-2">
+                        {% for booking in users_bookings %}
+
+                        <h3>{{ booking.date_booked }}</h3></a>
+                        {%if booking.booking_status == 'pending'%}
+                        <form action="/booking_confirmed/{{booking.id}}" method="GET">
+                            <button type="submit" class="btn btn-primary">Confirm booking</button>
+                        </form>
+                        {% endif %}
+                        {%if booking.booking_status == 'confirmed' %}
+                        <h5>{{ booking.booking_status }}</h5>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

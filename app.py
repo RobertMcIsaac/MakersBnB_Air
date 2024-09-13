@@ -48,14 +48,6 @@ def login_post():
         errors = "Incorrect username or password"
         return render_template('login.html', errors=errors)
 
-# if title == "" or release_year == "" or artist_id == "":
-#         errors = "Title, release year and artist id cannot be blank"
-#         return render_template('/albums/new.html', errors=errors)
-    
-#     album = Album(None, title, release_year, artist_id)
-#     repo.create_album(album)
-#     return redirect(f"/single_album/{album.id}")
-
 #------------------- SPACES ROUTES -------------------#
 
 @app.route('/spaces')
@@ -150,12 +142,13 @@ def register_successful():
 def get_booking_form(space_id):
     return render_template('booking_form.html', user_id = session["user_id"], space_id = space_id)
 
-@app.route('/user_bookings/<user_id>', methods=['GET'])
-def get_all_by_id(user_id):
+@app.route('/user_bookings/', methods=['GET'])
+def get_all_by_id():
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
-    users_bookings = repo.all_by_id(user_id)
-    return render_template('user_bookings.html', users = users_bookings)
+    users_bookings = repo.all_by_id(session["user_id"])
+    print(users_bookings)
+    return render_template('user_bookings.html', users_bookings=users_bookings)
     
 
 @app.route('/post_booking/<int:space_id>', methods=["POST"])
@@ -183,7 +176,7 @@ def post_booking(space_id):
         return render_template('booking_form.html', space_id=space_id, error=error)
     
     
-
+# This page is seen by the renter
 @app.route('/booking_complete/<int:id>', methods=['GET'])
 def get_booking(id):
     connection = get_flask_database_connection(app)
@@ -192,15 +185,15 @@ def get_booking(id):
     return render_template('booking.html', booking = booking)
 
 
-
-@app.route('/booking_confirmed/<int:booking_id>', methods=["PUT"])
+@app.route('/booking_confirmed/', methods=["GET"])
 def put_booking(booking_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     booking = repo.confirm_booking(booking_id)
-    return '' , 200
+    get_all_by_id = repo.all_by_id(session["user_id"])
+    return render_template('user_bookings.html', users_bookings=get_all_by_id)
 
-    
+# Could not build url for endpoint '/booking_confirmed' with values ['booking_id']. Did you mean 'get_booking_form' instead?
     
 
 # space needs to display available bookings (get) via user id

@@ -12,7 +12,7 @@ class BookingRepository():
         return all_bookings
     
     def all_by_id(self, user_id):
-        rows = self._connection.execute('SELECT * from bookings ORDER BY id WHERE user_id = %s', [user_id])
+        rows = self._connection.execute('SELECT * from bookings WHERE user_id = %s ORDER BY id', [user_id])
         all_bookings = []
         for row in rows:
             item = Booking(row['id'], row['date_booked'], row['booking_status'], row['user_id'], row['space_id'])
