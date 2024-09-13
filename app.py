@@ -85,8 +85,8 @@ def create_space():
     space = Space(None, name, description, price, user_id)
 
     try:
-        repository.create(space)
-        return render_template("/create_space_success.html")
+        space_id = repository.create(space)
+        return render_template("/create_space_success.html", id = space_id)
     
     except Exception as e:
         error = str(e)
