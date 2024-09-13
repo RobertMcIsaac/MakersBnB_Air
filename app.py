@@ -139,12 +139,13 @@ def register_successful():
 def get_booking_form(space_id):
     return render_template('booking_form.html', user_id = session["user_id"], space_id = space_id)
 
-@app.route('/user_bookings/<user_id>', methods=['GET'])
+@app.route('/user_bookings/<int:user_id>', methods=['GET'])
 def get_all_by_id(user_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     users_bookings = repo.all_by_id(user_id)
-    return render_template('user_bookings.html', users = users_bookings)
+    print(users_bookings)
+    return render_template('user_bookings.html', users_bookings=users_bookings)
     
 
 @app.route('/post_booking/<int:space_id>', methods=["POST"])
@@ -181,13 +182,15 @@ def get_booking(id):
     return render_template('booking.html', booking = booking)
 
 
-@app.route('/booking_confirmed/<int:booking_id>', methods=["PUT"])
+@app.route('/booking_confirmed/<int:booking_id>', methods=["GET"])
 def put_booking(booking_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     booking = repo.confirm_booking(booking_id)
-    return '' , 200
+    get_all_by_id = repo.all_by_id(session["user_id"])
+    return render_template('user_bookings.html', users_bookings=get_all_by_id)
 
+# Could not build url for endpoint '/booking_confirmed' with values ['booking_id']. Did you mean 'get_booking_form' instead?
     
 
 # space needs to display available bookings (get) via user id

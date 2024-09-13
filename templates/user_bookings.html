@@ -11,8 +11,16 @@
                     <h1 class="card-title">MakersBnB</h1>
                     <h3 class="card-subtitle mb-4">Confirm booking</h3>
                     <div class="d-grid gap-2">
-                        <!-- <a href="/login" class="btn btn-primary btn-lg">Login</a>
-                        <a href="/register" class="btn btn-secondary btn-lg">Sign Up</a> -->
+                        {% for bookings in users_bookings %}
+
+                        <h3>{{ bookings.date_booked }}</h3></a>
+                        <h5>{{ bookings.booking_status }}</h5>
+
+                        <form action="{{ url_for('booking_confirmed', bookings_id=bookings.id) }}" method="GET">
+                            <button type="submit" class="btn btn-primary">Confirm booking</button>
+                        </form>
+
+                        {% endfor %}
                     </div>
                 </div>
             </div>
