@@ -1,23 +1,30 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB - Air</title>
+{% extends "base.html" %}
 
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
-        <a href="/create_space"><button>Create a space</button></a>
-        {% for space in spaces %}
+{% block title %}Login{% endblock %}
 
-            <a href="/spaces/{{space.id}}"><h3>{{ space.name }}</h3></a>
-            <h5>{{ space.price }}</h5>
-            <p>{{ space.description }}</p>
 
-        {% endfor %}
 
+<body class="container-fluid">
+    <main class="row">
+        {% include 'navbar.html' %}
+
+        {% block content %}
+        <div class="d-flex justify-content-center align-items-center vh-100 homepage_image">
+            <div class="row">
+                {% for space in spaces %}
+                <div class="col-md-4">
+                    <div class="card mb-5 p-4 shadow-sm w-75 offset-md-1">
+                        <div class="card-body">
+                            <a href="/spaces/{{space.id}}"> <h5 class="card-title">{{ space.name }}</h5></a>
+                            <h5 class="card-title">{{ space.price }}</h5>
+                            <p class="card-text">{{ space.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endblock %}
     </body>
-</html>`
+</main>
+

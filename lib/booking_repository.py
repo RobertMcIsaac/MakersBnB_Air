@@ -11,6 +11,14 @@ class BookingRepository():
             all_bookings.append(item)
         return all_bookings
     
+    def all_by_id(self, user_id):
+        rows = self._connection.execute('SELECT * from bookings ORDER BY id WHERE user_id = %s', [user_id])
+        all_bookings = []
+        for row in rows:
+            item = Booking(row['id'], row['date_booked'], row['booking_status'], row['user_id'], row['space_id'])
+            all_bookings.append(item)
+        return all_bookings
+    
     def get_booking(self, id):
         rows = self._connection.execute('SELECT * FROM bookings WHERE id = %s', [id])
         return rows[0]

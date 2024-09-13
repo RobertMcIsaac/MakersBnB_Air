@@ -40,6 +40,7 @@ def login_post():
         user = repo.get_user_details(username)
         # Set the user ID in session
         session['user_id'] = user.id
+        session['username'] = user.username
 
         # return render_template('spaces.html')
         return redirect(location="/spaces")
@@ -63,8 +64,9 @@ def get_spaces():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     list_of_spaces = repository.all()
+    list_of_spaces_reverse = list_of_spaces[::-1]
 
-    return render_template('spaces.html', spaces=list_of_spaces)
+    return render_template('spaces.html', spaces=list_of_spaces_reverse)
 
 
 @app.route('/create_space')
@@ -80,13 +82,14 @@ def create_space():
     name = request.form["name"]
     description = request.form["description"]
     price = request.form["price"]
-    user_id = request.form["user_id"]
+    user_id = session["user_id"]
 
     space = Space(None, name, description, price, user_id)
 
     try:
-        repository.create(space)
-        return render_template("/create_space_success.html")
+        space_id = repository.create(space)
+
+        return render_template("/create_space_success.html", id = space_id)
     
     except Exception as e:
         error = str(e)
@@ -147,6 +150,13 @@ def register_successful():
 def get_booking_form(space_id):
     return render_template('booking_form.html', user_id = session["user_id"], space_id = space_id)
 
+@app.route('/user_bookings/<user_id>', methods=['GET'])
+def get_all_by_id(user_id):
+    connection = get_flask_database_connection(app)
+    repo = BookingRepository(connection)
+    users_bookings = repo.all_by_id(user_id)
+    return render_template('user_bookings.html', users = users_bookings)
+    
 
 @app.route('/post_booking/<int:space_id>', methods=["POST"])
 def post_booking(space_id):

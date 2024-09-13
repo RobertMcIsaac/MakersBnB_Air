@@ -4,6 +4,7 @@
 
 {% include 'navbar.html' %}
 
+
 <body class="container-fluid">
     <main class="row">
         {% block content %}
@@ -37,3 +38,18 @@
         {% endblock %}
     </body>
 </main>
+
+            <input type="text" name="name" placeholder="name" required/>
+            <input type="text" name="description" placeholder="description" required/>
+            <input type="number" name="price" placeholder="price" required />
+
+            <button type="submit">Create space</button>
+        </form>
+    </div>
+    <p class="t-error">
+        {{ error }}
+    </p>
+</body>
+
+</html>
+
