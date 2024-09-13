@@ -111,7 +111,7 @@ def test_spaces_page(page, test_web_address):
         'Private Office',
         'Garden Den', 
         'Cupboard'
-    ])
+    ][::-1])
 
     expect(h5_tags).to_have_text([
         '120.00',
@@ -121,7 +121,7 @@ def test_spaces_page(page, test_web_address):
         '18.00',
         '180.00',
         '150.00'
-    ])
+    ][::-1])
 
     expect(p_tags).to_have_text([
         'A small, comfortable apartment in the city center', 
@@ -131,7 +131,7 @@ def test_spaces_page(page, test_web_address):
         'A compact office space for individual work', 
         'A shed in my garden', 
         'A crappy cupboard underneath the stairs'
-    ])
+    ][::-1])
 
 """
     Create Space succes
