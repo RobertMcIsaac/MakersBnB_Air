@@ -48,6 +48,11 @@ def login_post():
         errors = "Incorrect username or password"
         return render_template('login.html', errors=errors)
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    session['user_id'] = None
+    return render_template('index.html')
+
 #------------------- SPACES ROUTES -------------------#
 
 @app.route('/spaces')
