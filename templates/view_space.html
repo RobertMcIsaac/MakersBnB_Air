@@ -1,28 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Create a space{% endblock %}
 
-{% block content %}
+{% include 'navbar.html' %}
 
-<a href="/create_space"><button>Create a space</button></a>
-<div class="row">
-    {% for space in spaces %}
-    <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">{{ space.name }}</h5>
-                <h5 class="card-title">{{ space.price }}</h5>
-                <p class="card-text">{{ space.description }}</p>
-            </div>
-            <div class="d-grid gap-2 mt-3">
-                <button type="submit" class="btn btn-primary btn-block">Book This Space
-                    <a href="/booking/{{space.id}}"></a>
-                </button>
+<body class="container-fluid">
+    <main class="row">
+        {% block content %}
+        <div class="d-flex justify-content-center align-items-center vh-100 homepage_image">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card mb-4 shadow-sm p-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ space.name }}</h5>
+                            <h5 class="card-title">{{ space.price }}</h5>
+                            <p class="card-text">{{ space.description }}</p>
+                        </div>
+                        <div class="d-grid gap-2 mt-3">
+                            <a href="/booking/{{space.id}}" class="btn btn-primary btn-block">Book This Space</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    {% endfor %}
-</div>
-{% endblock %}
+        {% endblock %}
+    </body>
+</main>
+
 
 
