@@ -40,6 +40,7 @@ def login_post():
         user = repo.get_user_details(username)
         # Set the user ID in session
         session['user_id'] = user.id
+        session['username'] = user.username
 
         # return render_template('spaces.html')
         return redirect(location="/spaces")
