@@ -63,8 +63,9 @@ def get_spaces():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     list_of_spaces = repository.all()
+    list_of_spaces_reverse = list_of_spaces[::-1]
 
-    return render_template('spaces.html', spaces=list_of_spaces)
+    return render_template('spaces.html', spaces=list_of_spaces_reverse)
 
 
 @app.route('/create_space')
