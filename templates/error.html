@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB-Air Error</title>
-        
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-        -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body>
+{% extends "base.html" %}
+
+{% block title %}Error{% endblock %}
+
+<body class="container-fluid">
+    <main class="row">
+        {% block content %}
         <p>ERROR: {{ error }}</p>
+        {% endblock %}
     </body>
-</html>
+</main>
