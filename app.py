@@ -78,19 +78,20 @@ def create_space():
 
     space = Space(None, name, description, price, user_id)
 
-    try:
-        space_id = repository.create(space)
+    # try:
+    space = repository.create(space)
+    print(space)
 
-        return render_template("/create_space_success.html", id = space_id)
+    return render_template("/create_space_success.html", id = space)
     
-    except Exception as e:
-        error = str(e)
-        return render_template("/create_space.html", error=error)
+    # except Exception as e:
+    #     error = str(e)
+    #     return render_template("/create_space.html", error=error)
 
 
-@app.route('/create_space_success')
-def create_space_successful():
-    return render_template('/create_space_success.html)')
+# @app.route('/create_space_success')
+# def create_space_successful():
+#     return render_template('/create_space_success.html)')
 
 
 @app.route('/spaces/<int:id>')
@@ -182,10 +183,11 @@ def get_booking(id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     booking = repo.get_booking(id)
+    print(booking)
     return render_template('booking.html', booking = booking)
 
 
-@app.route('/booking_confirmed/', methods=["GET"])
+@app.route('/booking_confirmed/<int:booking_id>', methods=["GET"])
 def put_booking(booking_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
