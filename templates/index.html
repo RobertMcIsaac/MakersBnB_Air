@@ -6,20 +6,19 @@
     <main class="row">
     {% block content %}
         <section class="container-fluid vh-100 d-flex align-items-center homepage_image">
-            <div class="row w-100">
+            <div class="row w-100 margin_bottom">
                 <div class="col-md-4 offset-md-1 mb-5">
                     <div class="p-4 mb-5">
                         <div class="card-body text-center mb-5" id="title_text_colour">
-                            <h1 class="card-title display-3">MakersBnB</h1>
+                            <h1 class="card-title display-2">MakersBnB</h1>
                             <!-- <h3 class="card-subtitle mb-5">Book your space</h3> -->
-                            <div class="d-grid gap-2">
-                                <a href="/login" class="btn btn-lg login_button" id="login_button">Login</a>
-                                <a href="/register" class="btn btn-lg" id="signup_button">Sign Up</a>
+                            <div class="d-grid gap-2 mb-5">
+                                <a href="/login" class="btn btn-primary btn-lg login_button m-2">Login</a>
+                                <a href="/register" class="btn btn-secondary btn-lg m-2">Sign Up</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4"></div>
             </div>
         </section>
     {% endblock %}
