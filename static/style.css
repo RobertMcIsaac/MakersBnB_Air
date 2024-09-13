@@ -1,3 +1,13 @@
+:root {
+    --green-colour-deep: #386641;
+    --green-colour-medium: #6A994E;
+    --green-colour-light: #A7C957;
+    --beige-colour: #F2E8CF;
+    --burgundy-colour: #BC4749;
+
+}
+
+
 html, body {
     height: 100%;
     margin: 0;
@@ -23,7 +33,23 @@ html, body {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.transparent-card {
+    background-color: rgba(255, 255, 255, 0.0);
+    border-radius: 10px; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+#title_text_colour {
+    color: #F2E8CF
+}
+
+#login_button {
+    background-color: #F2E8CF;
+}
+
+#signup_button {
+    background-color: #F2E8CF;
+}
 
 /* .homepage_image {
     background-image: url('/static/home-page./Users/robertmcisaac/Documents/Programming/MakersAcademy/MakersProjects/MakersBnB/makersbnb-Air/static/images');
