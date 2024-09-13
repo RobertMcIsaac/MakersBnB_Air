@@ -187,7 +187,7 @@ def put_booking(booking_id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     booking = repo.confirm_booking(booking_id)
-    get_all_by_id = repo.all_by_id(session["user_id"])
+    get_all_by_id = repo.all_by_id(1)
     return render_template('user_bookings.html', users_bookings=get_all_by_id)
 
 # Could not build url for endpoint '/booking_confirmed' with values ['booking_id']. Did you mean 'get_booking_form' instead?
