@@ -47,14 +47,6 @@ def login_post():
         errors = "Incorrect username or password"
         return render_template('login.html', errors=errors)
 
-# if title == "" or release_year == "" or artist_id == "":
-#         errors = "Title, release year and artist id cannot be blank"
-#         return render_template('/albums/new.html', errors=errors)
-    
-#     album = Album(None, title, release_year, artist_id)
-#     repo.create_album(album)
-#     return redirect(f"/single_album/{album.id}")
-
 #------------------- SPACES ROUTES -------------------#
 
 @app.route('/spaces')
@@ -173,14 +165,13 @@ def post_booking(space_id):
         return render_template('booking_form.html', space_id=space_id, error=error)
     
     
-
+# This page is seen by the renter
 @app.route('/booking_complete/<int:id>', methods=['GET'])
 def get_booking(id):
     connection = get_flask_database_connection(app)
     repo = BookingRepository(connection)
     booking = repo.get_booking(id)
     return render_template('booking.html', booking = booking)
-
 
 
 @app.route('/booking_confirmed/<int:booking_id>', methods=["PUT"])
@@ -190,7 +181,6 @@ def put_booking(booking_id):
     booking = repo.confirm_booking(booking_id)
     return '' , 200
 
-    
     
 
 # space needs to display available bookings (get) via user id
