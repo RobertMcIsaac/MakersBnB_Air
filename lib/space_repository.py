@@ -16,7 +16,7 @@ class SpaceRepository():
     def create(self, space: Space):
         rows = self._connection.execute("INSERT INTO spaces (name, description, price, user_id) VALUES (%s, %s, %s, %s) RETURNING id", [space.name, space.description, space.price, space.user_id])
         space = rows[0]
-        return space[id]
+        return space["id"]
     
     # find with owner
     def find_with_user_id(self, id):
