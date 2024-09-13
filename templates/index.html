@@ -1,21 +1,42 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB</title>
+{% extends "base.html" %}
 
-        <!--
-            Head to https://github.com/makersacademy/web-applications-in-python/blob/main/pills/loading_css_or_static_files.md
-            If you're wondering how the CSS file below is being loaded.
-            -->
-        <link rel="stylesheet" href="/static/style.css" >
-    </head>
-    <body class="homepage">
-        <div class="homepage-container">
-            <h1 class="homepage-title">MakersBnB</h1>
-            <h3 class="homepage-subheading">Book your space</h3>
-            <button class='login-button'><a style="text-decoration: none" href="/login">Login</a></button>
-            <button class='signin-button'><a style="text-decoration: none" href="/register">Sign up</a></button>
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <section class="container-fluid vh-100 d-flex align-items-center homepage_image">
+        <div class="row w-100">
+            <div class="col-md-4 offset-md-1">
+                <div class="card p-4 shadow semi-transparent-card">
+                    <div class="card-body text-center">
+                        <h1 class="card-title">MakersBnB</h1>
+                        <h3 class="card-subtitle mb-4">Book your space</h3>
+                        <div class="d-grid gap-2">
+                            <a href="/login" class="btn btn-primary btn-lg">Login</a>
+                            <a href="/register" class="btn btn-secondary btn-lg">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+{% endblock %}
 
-    </body>
-</html>
+<!-- 
+    <section class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="row">
+                    <h1 class="">MakersBnB</h1>
+                </div>
+                <div class="row">
+                    <h3 class="">Book your space</h3>
+                </div>
+                <div class="row">
+                    <button><a href="/login">Login</a></button>
+                </div>
+                <div class="row">
+                    <button><a href="/register">Sign up</a></button>
+                </div>
+            </div>
+        </div>
+    </section> -->

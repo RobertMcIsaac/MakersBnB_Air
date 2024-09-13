@@ -165,7 +165,7 @@ def post_booking(space_id):
     try: 
         booking = repo.create(booking)
         print(repo.is_date_unavailable(booking))
-        return redirect(f'/booking_complete/{booking.id}')``
+        return redirect(f'/booking_complete/{booking.id}')
     except Exception as e:
         error =  str(e)
         # pass error in html
