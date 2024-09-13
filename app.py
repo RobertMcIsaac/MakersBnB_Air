@@ -80,13 +80,14 @@ def create_space():
     name = request.form["name"]
     description = request.form["description"]
     price = request.form["price"]
-    user_id = request.form["user_id"]
+    user_id = session["user_id"]
 
     space = Space(None, name, description, price, user_id)
 
     try:
-        repository.create(space)
-        return render_template("/create_space_success.html")
+        space_id = repository.create(space)
+
+        return render_template("/create_space_success.html", id = space_id)
     
     except Exception as e:
         error = str(e)

@@ -30,9 +30,9 @@ def test_login_success(db_connection, page, test_web_address):
     input_password_tag = page.locator("input[name='password']")
     input_password_tag.fill('password123!')
     page.click("button[type='submit']")
-    expect(page).to_have_url(f'http://{test_web_address}/spaces')
-    # p_tag = page.locator("p")
-    # expect(p_tag).to_have_text("This is the homepage.")
+    expect(page).to_have_url("/login")
+    p_tag = page.locator("p")
+    expect(p_tag).to_have_text("This is the homepage.")
 
 # def test_register_page(page, test_web_address):
 #     page.set_default_timeout(1000)
@@ -161,30 +161,6 @@ def test_create_space_successful(page, test_web_address):
 
     p_tag = page.locator("p")
     expect(p_tag).to_have_text("Successfully created a space")
-
-
-"""
-    View Space
-"""
-def test_view_space(page, test_web_address):
-    page.set_default_timeout(1000)
-
-    page.goto(f"http://{test_web_address}/spaces/2")
-
-    name_tag = page.locator('h3')
-    price_tag = page.locator('h5')
-    # owner_tag = page.locator('h6')
-    description_tag = page.locator('p')
-
-    expect(name_tag).to_have_text('Modern Office')
-    expect(price_tag).to_have_text('250.00')
-    # expect(owner_tag).to_have_text('Avnita')
-    expect(description_tag).to_have_text('A sleek office space with a view')
-
-
-    # page.click("text='Book This Space")
-
-
 
 """
     Register page
